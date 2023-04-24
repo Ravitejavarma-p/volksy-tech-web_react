@@ -1,28 +1,27 @@
-const assert = require('assert');
-import { shallow } from 'enzyme';
+/**
+ * @jest-environment jsdom
+ */
+
+import React from "react";
+import { shallow } from "enzyme";
+import Login from "./Login";
 import { StyleSheetTestUtils } from 'aphrodite';
 
-import Login from './Login';
+StyleSheetTestUtils.suppressStyleInjection();
 
-describe('Test header exists', () => {
-  let wrapper = null;
+describe("<Login />", () => {
+    it("Login renders without any errors", () => {
+      const wrapper = shallow(<Login />);
+      expect(wrapper.exists()).toEqual(true);
+    });
 
-  beforeEach(() => {
-    wrapper = shallow(<Login />);
-    StyleSheetTestUtils.suppressStyleInjection();
-  });
-  afterEach(() => {
-    wrapper = null;
-    StyleSheetTestUtils.clearBufferAndResumeStyleInjection();
-  });
+    it("VVerify that the components renders 2 input tags", () => {
+      const wrapper = shallow(<Login />);
+      expect(wrapper.find("div.body-login input")).toHaveLength(2);
+    });
 
-  it('test that header renders without crashing', () => {
-    assert.equal(wrapper.length, 1);
-  });
-  it('Tests whether 2 input tags exist', () => {
-    assert(wrapper.find('input').length, 2);
-  });
-  it('Tests whether 2 label tags exist', () => {
-    assert(wrapper.find('label').length, 2);
-  });
-});
+    it("Verify that the components renders 2 label tags", () => {
+      const wrapper = shallow(<Login />);
+      expect(wrapper.find("div.body-login label")).toHaveLength(2);
+    });
+})

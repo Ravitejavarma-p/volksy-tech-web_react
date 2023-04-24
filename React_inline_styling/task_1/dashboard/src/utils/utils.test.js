@@ -1,33 +1,27 @@
-const assert = require('assert');
-const { getFullYear,
-        getFooterCopy,
-        getLatestNotifcation } = require('./utils')
+import { getFullYear, getFooterCopy, getLatestNotification } from "./utils";
 
-describe('Test getFullYear', () => {
-  it('Test getFullYear', () => {
-    const currentYear = getFullYear();
-    assert.equal(currentYear, 2021);
+describe("utils_tests", function () {
+  describe("getFullYear", function () {
+    it("Return a current year", function () {
+      const year = getFullYear();
+      expect(year).toEqual(new Date().getFullYear());
+    });
   });
-})
 
-describe('Test getFooterCopy', () => {
-  it('Test getFooterCopy(true)', () => {
-    const ret = getFooterCopy(true);
-    assert.equal(ret, 'Holberton School')
-  })
-  it('Test getFooterCopy(false)', () => {
-    const ret = getFooterCopy(false);
-    assert.equal(ret, 'Holberton School main dashboard');
-  })
-  it('Test getFooterCopy( /* Unexpected Input */ )', () => {
-    const ret = getFooterCopy('Some random input');
-    assert.equal(ret, 'Holberton School main dashboard');
-  })
-});
+  describe("getFooterCopy", function () {
 
-describe('Test getLatestNotification function', () => {
-  it('Test getLatestNotification', () => {
-    const ret = getLatestNotifcation();
-    assert.equal(ret, '<strong>Urgent requirement</strong> - complete by EOD');
+    it("Return a true message", function () {
+      expect(getFooterCopy(true)).toEqual("Holberton School");
+    });
+
+    it("Return a false message", function () {
+      expect(getFooterCopy(false)).toEqual("Holberton School main dashboard");
+    });
+  });
+
+  describe("getLatestNotification", function () {
+    it("Return correct element", function () {
+      expect(getLatestNotification()).toEqual("<strong>Urgent requirement</strong> - complete by EOD");
+    });
   });
 });

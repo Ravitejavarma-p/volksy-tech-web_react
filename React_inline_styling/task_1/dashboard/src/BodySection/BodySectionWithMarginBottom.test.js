@@ -1,29 +1,22 @@
-import assert from 'assert';
+import React from 'react';
 import { shallow } from 'enzyme';
+import BodySectionWithMarginBottom from './BodySectionWithMarginBottom';
+import BodySection from './BodySection';
 import { StyleSheetTestUtils } from 'aphrodite';
 
-import BodySectionWithMarginBottom from './BodySectionWithMarginBottom';
+StyleSheetTestUtils.suppressStyleInjection();
 
-describe('Test BodySectionWithMarginBottom react component', () => {
-  let BodySectionWithMarginBottomWithChildren = null;
 
-  beforeEach(() => {
-    BodySectionWithMarginBottomWithChildren = shallow(<BodySectionWithMarginBottom title={'test title'}>
-                                                        <p>test children node</p>
-                                                      </ BodySectionWithMarginBottom>);
-    StyleSheetTestUtils.suppressStyleInjection();
-  });
-  afterEach(() => {
-    BodySectionWithMarginBottomWithChildren = null;
-    StyleSheetTestUtils.clearBufferAndResumeStyleInjection();
-  });
-
-  it('Test BodySectionWithMarginBottom does\'nt explode on render', () => {
-    assert.equal(BodySectionWithMarginBottom.length, 1);
-  });
-  it('Test BodySectionWithMarginBottom contains the correct elements', () => {
-    assert.equal(BodySectionWithMarginBottomWithChildren.find('.bodySectionWithMargin').exists(), true);
-    assert.equal(BodySectionWithMarginBottomWithChildren.find('BodySection').exists(), true);
-  });
-
-})
+describe('<BodySectionWithMarginBottom />', () => {
+  it('renders a <BodySectionWithMarginBottom /> component', () => {
+		const wrapper = shallow(
+			<BodySectionWithMarginBottom title="test title">
+				<p>test children node</p>
+			</BodySectionWithMarginBottom>
+		);
+		expect(wrapper.find(BodySection).length).toEqual(1);
+		expect(wrapper.find(BodySection).props().title).toEqual('test title');
+		expect(wrapper.find(BodySection).props().children.type).toEqual('p');
+		expect(wrapper.find(BodySection).props().children.props.children).toEqual('test children node');
+	});
+});

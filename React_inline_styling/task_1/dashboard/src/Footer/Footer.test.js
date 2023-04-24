@@ -1,19 +1,23 @@
-const assert = require('assert');
-import { shallow } from 'enzyme';
-import Footer from './Footer';
+/**
+ * @jest-environment jsdom
+*/
 
-describe('Test header exists', () => {
-  let wrapper = null;
+import React from "react";
+import { shallow } from "enzyme";
+import Footer from "./Footer";
+import { StyleSheetTestUtils } from 'aphrodite';
 
-  beforeEach(() => {
-    wrapper = shallow(<Footer />);
+StyleSheetTestUtils.suppressStyleInjection();
+
+describe('<Footer />', () => {
+  it('render a Footer component without crashing', () => {
+    const wrapper = shallow(<Footer />);
+    expect(wrapper).toHaveLength(1);
+	});
+
+  it("Verify that the components at the very least render the text  Copyright", () => {
+    const wrapper = shallow(<Footer />);
+    expect(wrapper.find("footer p")).toHaveLength(1);
+    expect(wrapper.find("footer p").text()).toContain("Copyright");
   });
-
-  it('test that header renders without crashing', () => {
-    assert.equal(wrapper.length, 1);
-  });
-  it('Tests whether the text "Copyright" renders', () => {
-    assert(wrapper.find('p').text().includes('Copyright'), true);
-  });
-
 });

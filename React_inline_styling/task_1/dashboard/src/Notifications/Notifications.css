@@ -1,15 +1,7 @@
-.Notifications {
-    padding: 10px;
-    border: dashed 1px red;
-    width: fit-content;
-    display: inline;
-    position: absolute;
-    right: 0;
-    margin-top: 30px;
+[data-notification-type="default"] {
+  color: blue;
 }
 
-.menuItem {
-    position: absolute;
-    right: 0;
-    margin: 7px;
+[data-notification-type="urgent"] {
+  color: red;
 }

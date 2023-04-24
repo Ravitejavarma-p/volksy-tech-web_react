@@ -1,6 +1,15 @@
-const getFullYear = () => new Date().getFullYear();
-const getFooterCopy = (isIndex) => isIndex === true ? 'Holberton School':
-                                                      'Holberton School main dashboard';
-const getLatestNotifcation = () => '<strong>Urgent requirement</strong> - complete by EOD';
+export function getFullYear() {
+    let date = new Date()
+    return date.getFullYear()
+}
 
-module.exports = { getFullYear, getFooterCopy, getLatestNotifcation };
+export function getFooterCopy(isIndex) {
+    if (!isIndex) {
+        return 'Holberton School main dashboard'
+    }
+    return 'Holberton School'
+}
+
+export function getLatestNotification() {
+    return '<strong>Urgent requirement</strong> - complete by EOD'
+}

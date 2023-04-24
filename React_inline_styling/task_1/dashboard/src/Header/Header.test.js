@@ -1,28 +1,27 @@
-const assert = require('assert');
-import { shallow } from 'enzyme';
+/**
+ * @jest-environment jsdom
+ */
+
+import React from "react";
+import { shallow } from "enzyme";
+import Header from "./Header";
 import { StyleSheetTestUtils } from 'aphrodite';
 
-import Header from './Header';
+StyleSheetTestUtils.suppressStyleInjection();
 
-describe('Test header exists', () => {
-  let wrapper = null;
-
-  beforeEach(() => {
-    wrapper = shallow(<Header />);
-    StyleSheetTestUtils.suppressStyleInjection();
-  });
-  afterEach(() => {
-    wrapper = null;
-    StyleSheetTestUtils.clearBufferAndResumeStyleInjection();
+describe("<Header />", () => {
+  it("Header renders without any errors", () => {
+    const wrapper = shallow(<Header />);
+    expect(wrapper.exists()).toEqual(true);
   });
 
-  it('test that header renders without crashing', () => {
-    assert.equal(wrapper.length, 1);
+  it("Verify that the components render img", () => {
+    const wrapper = shallow(<Header />);
+    expect(wrapper.find("header img")).toHaveLength(1);
   });
-  it('Tests whether the img tag exists', () => {
-    assert(wrapper.find('img').length, 1);
+
+  it("Verify that the components render h1 tag", () => {
+    const wrapper = shallow(<Header />);
+    expect(wrapper.find("header h1")).toHaveLength(1);
   });
-  it('Tests whether the h1 tag exists', () => {
-    assert(wrapper.find('h1').length, 1);
-  });
-});
+})
