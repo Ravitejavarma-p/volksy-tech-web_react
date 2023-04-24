@@ -1,88 +1,90 @@
-import React, { Component, Fragment } from 'react';
-import Header from '../Header/Header';
-import Login from '../Login/Login';
-import Footer from '../Footer/Footer';
-import Notifications from '../Notifications/Notifications';
-import CourseList from '../CourseList/CourseList';
-import BodySection from '../BodySection/BodySection';
-import BodySectionWithMarginBottom from '../BodySection/BodySectionWithMarginBottom';
+import React from 'react';
 import PropTypes from 'prop-types';
-import { getLatestNotification } from '../utils/utils';
 import { StyleSheet, css } from 'aphrodite';
 
-class App extends Component {
+/* React components */
+import Notifications from '../Notifications/Notifications';
+import Login from '../Login/Login';
+import Footer from '../Footer/Footer';
+import Header from '../Header/Header';
+import CourseList from '../CourseList/CourseList'
+import BodySectionWithMarginBottom from '../BodySection/BodySectionWithMarginBottom';
+import BodySection from '../BodySection/BodySection';
+
+import { getLatestNotifcation } from '../utils/utils';
+
+class App extends React.Component {
   constructor(props) {
     super(props);
-    this.handleLogout = this.handleLogout.bind(this);
+    this.logoutHander = this.logoutHander.bind(this);
   }
-  componentDidMount() {
-    window.addEventListener('keydown', this.handleLogout);
-  }
-  componentWillUnmount() {
-    window.removeEventListener('keydown', this.handleLogout);
-  }
-  handleLogout(e) {
-    if (e.ctrlKey && e.key === 'h') {
-      e.preventDefault();
+
+  logoutHander(event) {
+    if (event.ctrlKey && event.key === 'h') {
       alert('Logging you out');
       this.props.logOut();
     }
   }
+
+  componentDidMount() {
+    document.addEventListener('keydown', this.logoutHander);
+  }
+  componentWillUnmount() {
+    document.removeEventListener('keydown', this.logoutHander);
+  }
+
   render() {
-    const listCourses = [
-      { id: 1, name: 'ES6', credit: 60 },
-      { id: 2, name: 'Webpack', credit: 20 },
-      { id: 3, name: 'React', credit: 40 },
-    ];
-    const listNotifications = [
-      { id: 1, type: 'default', value: 'New course available' },
-      { id: 2, type: 'urgent', value: 'New resume available' },
-      { id: 3, type: 'urgent', html: { __html: getLatestNotification() } },
-    ];
     const { isLoggedIn } = this.props;
     return (
-      <Fragment>
-        <Notifications listNotifications={listNotifications} />
+      <React.Fragment>
+        <Notifications listNotifications={ listNotifications } />
         <Header />
-        {isLoggedIn ? (
-          <BodySectionWithMarginBottom title='Course list'>
-            <CourseList listCourses={listCourses} />
-          </BodySectionWithMarginBottom>
-        ) : (
-          <BodySectionWithMarginBottom title='Log in to continue'>
-            <Login />
-          </BodySectionWithMarginBottom>
-        )}
-        <BodySection title='News from the School'>
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+        {
+          (isLoggedIn === true)
+            ? <BodySectionWithMarginBottom title={'Course list'}>
+                <CourseList listCourses={ listCourses } />
+              </BodySectionWithMarginBottom>
+            : <BodySectionWithMarginBottom title={ 'Log in to continue' }>
+                <Login />
+              </BodySectionWithMarginBottom>
+        }
+        <BodySection title={ 'News from the School' } >
+          <p>Some random text</p>
         </BodySection>
-        <div className={css(styles.footer)}>
-          <Footer />
-        </div>
-      </Fragment>
+        <Footer />
+      </React.Fragment>
     );
   }
+
 }
 
 App.defaultProps = {
   isLoggedIn: false,
-  logOut: () => undefined,
-};
-
+  logOut: () => {}
+}
 App.propTypes = {
   isLoggedIn: PropTypes.bool,
-  logOut: PropTypes.func,
-};
+  logOut: PropTypes.func
+}
 
 const styles = StyleSheet.create({
-  footer: {
-    width: '100%',
-    position: 'fixed',
-    bottom: 0,
-    textAlign: 'center',
-    fontStyle: 'italic',
-    borderTop: 'thick solid #e0344a',
+  body: {
+
   },
-});
+  footer: {
+    
+  }
+})
+
+const listCourses = [
+  {id: 1, credit: 60, name: 'ES6'},
+  {id: 2, credit: 20, name: 'Webpack'},
+  {id: 3, credit: 40, name: 'React'},
+];
+const listNotifications = [
+  {id: 1, type: 'default', value: 'New course available'},
+  {id: 2, type: 'urgent', value: 'New resume available'},
+  {id: 3, type: 'urgent', html: {__html: getLatestNotifcation()}}
+];
 
 export default App;

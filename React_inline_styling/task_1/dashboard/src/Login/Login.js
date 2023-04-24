@@ -1,37 +1,27 @@
 import React from 'react';
 import { StyleSheet, css } from 'aphrodite';
 
-function Login() {
-  return (
-    <main role='main' className={css(styles.login)}>
-      <p>Login to access the full dashboard</p>
-      <label htmlFor='email'>Email</label>
-      <input className={css(styles.inp)} type='email' name='email' id='email' />
-      <label htmlFor='password'>Password</label>
-      <input
-        className={css(styles.inp)}
-        type='password'
-        name='password'
-        id='password'
-      />
-      <button className={css(styles.btn)} type='button'>
-        OK
-      </button>
-    </main>
-  );
-}
+
+const Login = () => (
+  <div className={"App-body " + css(styles.divMargin)}>      
+    <p className={css(styles.paragraphPadding)}>Login to access the full dashboard</p>
+    <div id="form">
+      <label htmlFor="email">Email</label>
+      <input type="email" name="email" id="email" />
+      <label htmlFor="password">Password</label>
+      <input type="password" name="password" id="password" />
+      <button type="submit">OK</button>
+    </div>
+  </div>
+)
 
 const styles = StyleSheet.create({
-  login: {
-    padding: '16px 24px',
+  divMargin: {
+    margin: '40px'
   },
-  inp: {
-    margin: '4px',
-  },
-  btn: {
-    margin: '4px',
-    cursor: 'pointer',
-  },
-});
+  paragraphPadding: {
+    padding: '10px 0'
+  }
+})
 
 export default Login;
